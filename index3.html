@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Women's Day Surprise</title>
+
+<style>
+
+body{
+margin:0;
+font-family:sans-serif;
+background:linear-gradient(#ff9ecf,#ffd6ec);
+text-align:center;
+overflow:hidden;
+}
+
+h1{
+color:white;
+margin-top:20px;
+}
+
+.balloon{
+width:80px;
+height:100px;
+background:red;
+border-radius:50%;
+position:absolute;
+cursor:pointer;
+animation:float 4s infinite alternate;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+100%{transform:translateY(-80px)}
+}
+
+.popup{
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:20px;
+border-radius:12px;
+width:300px;
+box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+.popup img{
+width:200px;
+border-radius:10px;
+}
+
+button{
+padding:10px 15px;
+border:none;
+background:#ff4fa3;
+color:white;
+border-radius:8px;
+margin-top:10px;
+}
+
+#messagePage,#gamePage,#finalPage{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#ff9ecf;
+color:white;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-size:24px;
+}
+
+.heart{
+position:absolute;
+color:red;
+font-size:20px;
+animation:heartFloat 6s linear infinite;
+}
+
+@keyframes heartFloat{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-100px)}
+}
+
+.gameBall{
+width:70px;
+height:70px;
+background:yellow;
+border-radius:50%;
+position:absolute;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Tap the Balloons 🎈</h1>
+
+<div class="balloon" style="left:10%;top:70%" onclick="popBalloon(1,this)"></div>
+<div class="balloon" style="left:30%;top:60%" onclick="popBalloon(2,this)"></div>
+<div class="balloon" style="left:50%;top:75%" onclick="popBalloon(3,this)"></div>
+<div class="balloon" style="left:70%;top:65%" onclick="popBalloon(4,this)"></div>
+<div class="balloon" style="left:85%;top:55%" onclick="popBalloon(5,this)"></div>
+
+<div class="popup" id="popup">
+
+<h2 id="msg"></h2>
+
+<img id="photo" src="./photo1.jpg">
+
+<br>
+
+<button onclick="closePopup()">Close</button>
+
+</div>
+
+<div id="messagePage">
+
+<div>
+
+<h2>AAPKA APNA PRINCUU BHAIII KI TRF SE</h2>
+
+<h1>Happy Women's Day 🌷</h1>
+
+<p>
+Strong women don't wait for opportunities — they create them.
+</p>
+
+<p>
+Queens don't need crowns, their strength speaks for them.
+</p>
+
+<button onclick="openGame()">View Next</button>
+
+</div>
+
+</div>
+
+<div id="gamePage">
+
+<h2>Mini Game 🎮</h2>
+
+<p>Tap the yellow balls to win</p>
+
+<div class="gameBall" style="left:20%;top:60%" onclick="hitBall(this)"></div>
+<div class="gameBall" style="left:50%;top:40%" onclick="hitBall(this)"></div>
+<div class="gameBall" style="left:70%;top:70%" onclick="hitBall(this)"></div>
+
+</div>
+
+<div id="finalPage">
+
+<h1>🎉 Happy Women's Day Dii 🌷🛐</h1>
+
+<p>Always keep slaying and inspiring everyone around you</p>
+
+<h2>🔥 Jai Aurat 🛐💪🏻🌷</h2>
+
+</div>
+
+<audio id="bgMusic" src="./pop.mp3"></audio>
+
+<script>
+
+var count=0;
+var gameScore=0;
+var musicStarted=false;
+
+var messages=[
+"",
+"You're not just strong, you're inspiring ❤️",
+"Your aura and strength are powerful 😈",
+"Queens never need a crown 👑",
+"The world is brighter with women like you ✨",
+"Never forget how amazing you are 🌸"
+];
+
+var photos=[
+"",
+"./photo1.jpg",
+"./photo2.jpg",
+"./photo3.jpg",
+"./photo4.jpg",
+"./photo5.jpg"
+];
+
+function popBalloon(num,el){
+
+if(!musicStarted){
+
+document.getElementById("bgMusic").play();
+
+musicStarted=true;
+
+}
+
+el.style.display="none";
+
+document.getElementById("msg").innerText=messages[num];
+
+document.getElementById("photo").src=photos[num];
+
+document.getElementById("popup").style.display="block";
+
+count++;
+
+if(count==5){
+
+setTimeout(()=>{
+
+if(count==5){
+
+setTimeout(()=>{
+
+document.getElementById("messagePage").style.display="flex";
+
+},1500);
+
+}
+
+document.getElementById("messagePage").style.display="flex";
+
+},1500);
+
+}
+
+}
+
+function closePopup(){
+
+document.getElementById("popup").style.display="none";
+
+}
+
+function openGame(){
+
+document.getElementById("messagePage").style.display="none";
+
+document.getElementById("gamePage").style.display="flex";
+
+}
+
+function hitBall(ball){
+
+ball.style.display="none";
+
+gameScore++;
+
+if(gameScore==3){
+
+document.getElementById("gamePage").style.display="none";
+
+document.getElementById("finalPage").style.display="flex";
+
+}
+
+}
+
+setInterval(()=>{
+
+let heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"%";
+
+heart.style.fontSize=(15+Math.random()*20)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{heart.remove()},6000);
+
+},600);
+
+</script>
+
+</body>
+</html>
